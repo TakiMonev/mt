@@ -30,6 +30,28 @@ public class QuestionController {
     @GetMapping("/{question}")
     public String getQuestion(@PathVariable("question") String question,
                               Model model) {
+
+        if (question.equals("score")) {
+            try {
+                Long teamScore1 = scoreService.getTeamScore("team1");
+                Long teamScore2 = scoreService.getTeamScore("team2");
+                Long teamScore3 = scoreService.getTeamScore("team3");
+                Long teamScore4 = scoreService.getTeamScore("team4");
+
+                model.addAttribute("team1Score", teamScore1);
+                model.addAttribute("team2Score", teamScore2);
+                model.addAttribute("team3Score", teamScore3);
+                model.addAttribute("team4Score", teamScore4);
+
+                System.out.println("Search scores...");
+
+                return "score";
+            } catch (Exception e) {
+                e.printStackTrace();
+                return "fail";
+            }
+        }
+
         try {
             Optional<Question> myQuestion = questionService.findQuestion(question);
             model.addAttribute("info", myQuestion.get());
