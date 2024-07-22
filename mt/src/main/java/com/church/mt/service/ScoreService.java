@@ -58,6 +58,6 @@ public class ScoreService {
 
     public Long getTeamScore(String teamNum) {
         Long teamNScore = scoreRepository.getTeamScore(teamNum);
-        return teamNScore;
+        return teamNScore != null ? teamNScore : 0;
     }
 }
