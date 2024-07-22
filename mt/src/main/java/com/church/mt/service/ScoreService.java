@@ -4,6 +4,7 @@ import com.church.mt.model.Question;
 import com.church.mt.model.Score;
 import com.church.mt.repository.QuestionRepository;
 import com.church.mt.repository.ScoreRepository;
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.java.Log;
@@ -40,17 +41,23 @@ public class ScoreService {
             Long myTeamScore = maxScore - solvedOrder * dividedScore;
 
             Score questionScore = new Score(question, team, myTeamScore);
-            scoreRepository.save(questionScore);
+            scoreRepository.saveAndFlush(questionScore);
         } catch (DataException error) {
             throw error;
         }
     }
 
+    @Transactional
     public String isSolvable(String question, String team) {
         if (scoreRepository.findByQuestionAndTeam(question, team).isPresent()) {
             return "again";
         } else {
             return "success";
         }
+    }
+
+    public Long getTeamScore(String teamNum) {
+        Long teamNScore = scoreRepository.getTeamScore(teamNum);
+        return teamNScore;
     }
 }

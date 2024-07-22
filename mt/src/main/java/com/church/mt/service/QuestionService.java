@@ -23,6 +23,8 @@ public class QuestionService {
     }
 
     public Optional<Question> findQuestion(String questionName) {
+        System.out.print("question is... ");
+        System.out.println(questionName);
         Optional<Question> myQuestion = questionRepository.findByQuestionName(questionName);
         System.out.println("myQuestion : " + myQuestion.get().getQuestionName());
         return myQuestion;
