@@ -12,6 +12,6 @@ public interface ScoreRepository extends JpaRepository<Score, Long> {
     @Query("SELECT COUNT(s) FROM Score s WHERE s.question = ?1")
     public Long getSolvedOrder(String question);
 
-    @Query("SELECT SUM(score) FROM Score s WHERE s.team = ?1")
+    @Query("SELECT SUM(s.score) FROM Score s WHERE s.team = ?1")
     public Long getTeamScore(String teamName);
 }
